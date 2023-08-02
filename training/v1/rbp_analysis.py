@@ -51,7 +51,8 @@ class PhageDesigner:
         
         self.model.eval()
         output = self.model(torch.tensor(features).cuda().float())
-        output = torch.sigmoid(output)  
+        output = torch.sigmoid(output)
+        print("output[42] =", output[42].argmax())
         self.protein_ids = rbp_embeddings['Protein ID'].tolist() 
         self.phages = rbp_embeddings['Description'].tolist()
         self.host_list = list(set(self.hosts))

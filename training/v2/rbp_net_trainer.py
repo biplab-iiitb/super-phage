@@ -76,6 +76,7 @@ class PhageTrainer:
            strict=False,  # "models/init/token_nca_v18.pth"
         )
         
+        #X_test, y_test = pickle.load(open("data/Xy_test.pkl", "rb"))
         features = self.phage_dataset.X_test
         self.model.eval()
         output = self.model(torch.tensor(features).cuda().float())

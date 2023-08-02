@@ -13,8 +13,7 @@ class PhageDataset(Dataset):
         embedding_type = "prott5"
         rbp_embeddings = pd.read_csv(f'data/features_csv/rbp_embeddings_{embedding_type}.csv', 
                                      low_memory = False)
-        rbp_embeddings['Modification Date'] = pd.to_datetime(rbp_embeddings['Modification Date'])
-        # Get only the top 25% hosts
+        #rbp_embeddings['Modification Date'] = pd.to_datetime(rbp_embeddings['Modification Date'])
         # Get only the top 25% hosts
         all_counts = rbp_embeddings['Host'].value_counts()
         TOP_X_PERCENT = 0.25
@@ -35,9 +34,12 @@ class PhageDataset(Dataset):
        
         X = self.features.copy()
         Y = list(self.hosts)
+
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, Y, test_size = 0.3, random_state = 42)
         self.y_target = [self.host_to_idx[h] for h in self.y_test]
         #print(X_train.shape, X_test.shape)
+        #import pickle
+        #pickle.dump((self.X_test, self.y_test), open("data/Xy_test.pkl", "wb"))
         print("Total hosts: ", len(self.host_to_idx))
         print("Total phages: ", len(self.hosts))
         
